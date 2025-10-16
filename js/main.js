@@ -57,7 +57,7 @@ function showResultState(imageUrl) {
         loaderOverlay.classList.add("hidden");
         generatedImage.classList.add("loaded");
         generateBtn.disabled = false;
-        generateBtn.textContent = "Generate ✨";
+        generateBtn.textContent = "Generate 🚀"; // Updated emoji
     };
 }
 
@@ -66,9 +66,9 @@ function showResultState(imageUrl) {
  */
 function showErrorState(message) {
     loaderOverlay.classList.add("hidden");
-    alert(`An error occurred: ${message}`); // Simple error feedback
+    alert(`Oops! An error occurred: ${message} 😢`); // Simple error feedback
     generateBtn.disabled = false;
-    generateBtn.textContent = "Generate ✨";
+    generateBtn.textContent = "Generate 🚀"; // Updated emoji
 }
 
 /**

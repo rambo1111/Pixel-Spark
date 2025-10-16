@@ -17,21 +17,26 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevents scrolling */
 }
 
 body {
     font-family: 'Space Grotesk', sans-serif;
     background-color: var(--bg-color);
     color: var(--font-color);
-    display: grid; /* Use Grid for perfect centering */
-    place-items: center;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* --- Animations --- */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -45,42 +50,75 @@ body {
     40% { transform: scale(1.0); }
 }
 
+/* --- Header --- */
+.site-header {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideDown 0.6s ease-out forwards;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 0.3s forwards;
+}
+
+.github-btn {
+    color: var(--font-color);
+    transition: transform 0.2s ease, color 0.2s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 0.4s forwards;
+}
+
+.github-btn:hover {
+    transform: scale(1.15) rotate(-5deg);
+    color: var(--primary-color);
+}
+
+
 /* --- Main Card & Container --- */
 .container {
     width: 100%;
-    height: 100%;
+    flex-grow: 1; /* Fills remaining vertical space */
     display: grid;
     place-items: center;
 }
 
 .card {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two-column layout */
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
+    align-items: start; /* This is the key fix! Prevents columns from stretching. */
     width: 100%;
     max-width: 1000px;
     height: auto;
-    max-height: 90vh;
     background: white;
     border: var(--border-width) solid var(--font-color);
     border-radius: var(--border-radius);
     padding: 2rem;
     box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--font-color);
-    animation: fadeIn 0.5s ease-out forwards;
+    animation: fadeIn 0.5s ease-out 0.2s forwards;
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
+    height: 100%; /* Ensure it fills its now non-stretched grid area */
 }
 
 h1, .description, .controls, .btn-primary {
-    animation: fadeIn 0.5s ease-out 0.2s forwards;
+    animation: fadeIn 0.5s ease-out 0.5s forwards;
     opacity: 0; /* Start hidden for animation */
 }
 
 h1 { margin-top: 0; }
-.description { margin-bottom: auto; padding-bottom: 1rem; }
+.description { margin-bottom: auto; padding-bottom: 1rem; line-height: 1.5; }
 
 /* --- Controls & Sliders --- */
 .controls {
@@ -149,25 +187,32 @@ input[type="range"]::-webkit-slider-thumb:hover {
 /* --- Image Result Area --- */
 .result-container {
     width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .image-wrapper {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: auto; /* Allow height to be determined by content */
     min-height: 250px;
     background: var(--bg-color);
     border: var(--border-width) solid var(--font-color);
     border-radius: var(--border-radius);
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
+    padding: 1rem;
+    aspect-ratio: 1/1; 
 }
 
 #generated-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Scales image down to fit */
-    opacity: 0; /* Hidden for animation */
+    object-fit: contain;
+    opacity: 0;
 }
 
 #generated-image.loaded {
@@ -216,13 +261,18 @@ input[type="range"]::-webkit-slider-thumb:hover {
 @media (max-width: 768px) {
     body {
         padding: 0;
-        display: block; /* Stack on mobile */
-        overflow: auto; /* Allow scrolling on small screens if content overflows */
+        display: block;
+        overflow: auto;
     }
+
+    .site-header {
+        padding: 1rem 1.5rem;
+    }
+
     .card {
         grid-template-columns: 1fr; /* Single column layout */
         height: auto;
-        min-height: 100vh;
+        min-height: calc(100vh - 82px); /* Account for header height */
         border-radius: 0;
         border: none;
         box-shadow: none;
@@ -231,5 +281,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
     }
     .image-wrapper {
         min-height: 300px;
+        height: auto;
+        aspect-ratio: auto;
+    }
+    #generated-image {
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
 }
