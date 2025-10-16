@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 8-bit Image Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="loader-overlay" class="loader-overlay hidden">
+        <div class="loader-dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <p>Generating an image for: <b id="random-word-display"></b></p>
+    </div>
+
+    <main class="container">
+        <div class="card">
+            <div class="card-content">
+                <h1>AI Image Generator</h1>
+                <p class="description">Create an 8-bit image from a random word.</p>
+
+                <div class="controls">
+                    <div class="slider-group">
+                        <label for="width">Width: <span id="width-value">512</span>px</label>
+                        <input type="range" id="width" min="256" max="2048" value="512" step="64">
+                    </div>
+                    <div class="slider-group">
+                        <label for="height">Height: <span id="height-value">512</span>px</label>
+                        <input type="range" id="height" min="256" max="2048" value="512" step="64">
+                    </div>
+                    <div class="slider-group">
+                        <label for="steps">Inference Steps: <span id="steps-value">4</span></label>
+                        <input type="range" id="steps" min="1" max="50" value="4" step="1">
+                    </div>
+                </div>
+
+                <button id="generate-btn" class="btn-primary">Generate ✨</button>
+            </div>
+
+            <div id="result-container" class="result-container">
+                <div class="image-wrapper">
+                    <img id="generated-image" src="" alt="Generated AI image">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/main.js" type="module"></script>
+</body>
+</html>
